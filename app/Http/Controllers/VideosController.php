@@ -16,7 +16,7 @@ class VideosController extends Controller
      */
     public function index()
     {
-        //
+        return Video::all();
     }
 
     /**
@@ -51,21 +51,9 @@ class VideosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Video $file)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return response()->json(null, 201)->header('Location', $file->url);
     }
 
     /**
@@ -74,8 +62,8 @@ class VideosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Video $file)
     {
-        //
+        $file->delete();
     }
 }

@@ -20,4 +20,7 @@ Route::get('/health', function () {
 });
 
 
+Route::get('/files/{file}', [VideosController::class, 'show']);
+Route::delete('/files/{file}', [VideosController::class, 'destroy']);
 Route::post('/files', [VideosController::class, 'store']);
+Route::get('/files', [VideosController::class, 'index']);
