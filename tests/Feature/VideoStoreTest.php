@@ -32,6 +32,16 @@ class VideoStoreTest extends TestCase
         $response->assertBadRequest();
     }
 
+    public function testVideoStoreWithWrongContent()
+    {
+        $file = UploadedFile::fake()->create('test.txt', 100);
+        $response = $this->postJson('/files', [
+            'data' => $file,
+        ]);
+
+        $response->assertStatus(415);
+    }
+
     public function testVideoStoreWithFileAlreadyExists()
     {
         Storage::fake('s3');
@@ -45,5 +55,20 @@ class VideoStoreTest extends TestCase
         ]);
 
         $response->assertStatus(409);
+    }
+
+    public function testVideoStoreWithValidFile()
+    {
+        Storage::fake('s3');
+        $file = UploadedFile::fake()->create('test.mp4', 100);
+
+        $response = $this->postJson('/files', [
+            'data' => $file,
+        ]);
+
+        $response->assertSuccessful();
+        $this->assertDatabaseHas('videos', [
+            'title' => $file->getClientOriginalName(),
+        ]);
     }
 }
