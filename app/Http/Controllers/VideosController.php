@@ -30,14 +30,14 @@ class VideosController extends Controller
         $file = $request->file('data');
         $fileName = $file->getClientOriginalName();
 
-        if (Storage::disk('s3')->exists($fileName)) {
+        if (Video::whereTitle($fileName)->first()) {
             return response()->json(['message' => 'File exists'], 409);
         }
 
         Storage::disk('s3')->put($fileName, file_get_contents($file));
         $fileLocation = Storage::disk('s3')->url($fileName);
 
-        Video::store([
+        Video::insert([
             'title' => $fileName,
             'url' => $fileLocation
         ]);
