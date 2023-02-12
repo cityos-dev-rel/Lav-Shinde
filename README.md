@@ -1,66 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Challenge Statement
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This challenge is about creating a simple video storage server with REST APIs
 
-## About Laravel
+## Details
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+You are tasked to develop a simple video storage server with REST APIs, which should have:
+- **CRUD implemention** as described in the [Open API definition](./api.yaml). (This document only contains the minimum and may need to be added).
+- **Dockerfile** and **docker-compose** to build and run the server and other required services as docker containers.
+- The endpoints of the server are exposed to the host machine.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## What we expect
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+When working on this challenge, be sure to:
 
-## Learning Laravel
+- prove correctness of the code. We don't expect 100% test coverage but highlights on critical paths and logic is very welcome.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- handle errors and bad inputs
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- provide user friendliness of installation and setup. We'll run `docker-compose up` in a clean environment without toolchains, JVM or SDKs and expect to see a server and the needed containers building and starting (this includes DB and all the other images used to complete the task).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+We understand taking a challenge is time consuming, so feel free to choose an additional feature you feel passionate about and explain in words how you would like to implement it. We can discuss it further during the next interview steps!
 
-## Laravel Sponsors
+## How to submit your solution
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Push your code to this repository in the `main` branch.
+- Make sure the endpoints follow the path suggested in the `api.yaml` file (v1 included!).
+- If your setup is correct the CI will return a green check and you can move forward.
 
-### Premium Partners
+⚠️ **Note #1**: the CI/CD runs checks against a set of tests necessary to consider the assigment correct. _Without a green check we won't review the challenge_ as we can safely assume the overall solution is incomplete. Also, please *DO NOT* change the CI/CD workflow file _or_ the `test/tester.json` file - if you want to add your own tests, please add them in a dedicated folder of your choice.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+⚠️ **Note #2**: if you add or change APIs, include its OpenAPI document. However, please note that your server may be accessed by external clients in accordance with the given OpenAPI document and automated tests will hit the endpoints as described in [api.yaml](./api.yaml), therefore any change in the base path could result in 404 or false negative.
 
-## Contributing
+## FAQ
+_Questions outside of this FAQ will not be answered. Please include them with your challenge submission and they can be covered in the technical interview stage._
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+**My submission is not passing the health check. Can I still submit it for review?**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Your submission must pass all automated tests to be considered for review. If it doesn’t pass, your solution won’t be considered correct. The workflow should also pass without modification.
 
-## Security Vulnerabilities
+**Do you have any limit to the file size?**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+No. As long as the CI pipeline doesn’t complain we don’t have requirements.
 
-## License
+**Do I need to demonstrate other aspects in backend developments, like code quality, to pass because 100% test coverage is the basic requirement?**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Code quality, folder structure and software development principles are considered during the solution review. Naming variables “xyz” is usually a minus even if the solution is correct.
+
+**Where should I store the files? File system or database?**
+
+That’s up to you. A local storage is preferred to a remote one (S3 needs keys for example), but there’s no strong preference between file system and database as long as the API requirements are satisfied.
+
+**Is any language/framework fine as long as the 'Expectations' are met?**
+
+You can use any language.
+
+**Is storage meant to be local, cloud-based, or either?**
+
+That’s up to you. Local storage is preferred to a remote one unless you are comfortable with committing keys to your cloud storage (we suggest avoiding this and we are not responsible for any leak of your credentials), but there’s no strong preference between file system and database as long as the API requirements are satisfied.
+
+**Is Unit testing also required?**
+
+It isn't required, but it is nice to have.
+
+**OpenAPI has been used for api specification, is it ok if I use Swagger UI to visualize openapi yaml?**
+
+Yes, it is OK to use swagger UI as long as it doesn't interfere with the main service.
+
+**Do I only have one chance to push to the main branch (or ext-solution branch) of the repository?**
+
+No. That’s your repository and your main branch, we just ask you to keep your commits and PR tidy. If you feel like branching you can also do this, just tell us to check the branch to evaluate your thought process better.
+
+
+
+Again, we appreciate you taking the time to work on this challenge and we are looking forward to your submission!
+
