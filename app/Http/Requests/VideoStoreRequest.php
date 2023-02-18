@@ -28,7 +28,7 @@ class VideoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required|file|mimes:mp4,mpeg|max:10240'
+            'data' => 'required|file|mimes:mp4,mpeg'
         ];
     }
 
