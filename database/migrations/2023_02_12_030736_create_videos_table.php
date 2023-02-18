@@ -13,8 +13,8 @@ return new class () extends Migration {
     public function up()
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->ulid('fileid');
-            $table->string('name');
+            $table->ulid('fileid')->primary();
+            $table->string('name')->unique();
             $table->integer('size')->description('in bytes');
             $table->string('url');
             $table->timestamps();
