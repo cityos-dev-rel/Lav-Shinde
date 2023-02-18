@@ -39,7 +39,7 @@ class VideosController extends Controller
             'name' => $fileName,
             'size' => $file->getSize(),
         ]);
-        Storage::disk('s3')->put($video->fileid, file_get_contents($file));
+        Storage::disk('s3')->put($video->fileid, $file->getContent());
         $fileLocation = Storage::disk('s3')->url($video->fileid);
 
         return response()->json(null, 201)->header('Location', $fileLocation);
@@ -53,7 +53,7 @@ class VideosController extends Controller
      */
     public function show(Video $file)
     {
-        return response()->json(null, 201)->header('Location', $file->url);
+        return Storage::disk('s3')->download($file->fileid, $file->name);
     }
 
     /**
