@@ -4,12 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Video;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 
 class VideoStoreTest extends TestCase
 {
