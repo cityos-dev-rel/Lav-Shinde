@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Video;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class VideoGetTest extends TestCase
@@ -21,10 +19,12 @@ class VideoGetTest extends TestCase
         $response->assertOk();
         $response->assertJsonCount(4);
         $response->assertJsonStructure([
-            'fileid',
-            'name',
-            'size',
-            'created_at',
+            '*' => [
+                'fileid',
+                'name',
+                'size',
+                'created_at',
+            ]
         ]);
     }
 }
