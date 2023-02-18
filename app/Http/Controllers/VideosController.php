@@ -10,22 +10,11 @@ use Illuminate\Support\Str;
 
 class VideosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return Video::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(VideoStoreRequest $request)
     {
         $file = $request->file('data');
@@ -45,25 +34,14 @@ class VideosController extends Controller
         return response()->json(null, 201)->header('Location', $fileLocation);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Video $file)
     {
         return Storage::disk('s3')->download($file->fileid, $file->name);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Video $file)
     {
         $file->delete();
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
