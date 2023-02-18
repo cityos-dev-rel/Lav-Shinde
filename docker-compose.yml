@@ -88,6 +88,8 @@ services:
       /usr/bin/mc policy download myminio/local;
       exit 0;
       "
+    networks:
+      - sail
 
 networks:
   sail:
