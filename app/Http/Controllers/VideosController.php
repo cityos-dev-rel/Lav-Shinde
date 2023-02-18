@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VideoStoreRequest;
 use App\Models\Video;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -36,15 +35,12 @@ class VideosController extends Controller
             return response()->json(['error' => 'File exists'], Response::HTTP_CONFLICT);
         }
 
-        $randomName = $this->getRandomNameForFile();
-        Storage::disk('s3')->put($randomName, file_get_contents($file));
-        $fileLocation = Storage::disk('s3')->url($randomName);
-
-        Video::create([
+        $video = Video::create([
             'name' => $fileName,
             'size' => $file->getSize(),
-            'url' => $fileLocation
         ]);
+        Storage::disk('s3')->put($video->fileid, file_get_contents($file));
+        $fileLocation = Storage::disk('s3')->url($video->fileid);
 
         return response()->json(null, 201)->header('Location', $fileLocation);
     }
@@ -69,14 +65,5 @@ class VideosController extends Controller
     public function destroy(Video $file)
     {
         $file->delete();
-    }
-
-    private function getRandomNameForFile(): string
-    {
-        $name = Str::random(20);
-        while (Storage::disk('s3')->exists($name)) {
-            $name = Str::random(20);
-        }
-        return $name;
     }
 }
