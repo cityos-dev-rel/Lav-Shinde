@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
       args:
         WWWGROUP: "${WWWGROUP}"
-    image: sail-8.2/app
+    image: sail-8.2/video-storage-server
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
@@ -57,8 +57,4 @@ networks:
 
 volumes:
   sail-mysql:
-    driver: local
-  sail-redis:
-    driver: local
-  sail-meilisearch:
     driver: local

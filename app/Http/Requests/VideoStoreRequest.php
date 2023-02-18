@@ -34,6 +34,15 @@ class VideoStoreRequest extends FormRequest
 
     protected function failedValidation(Validator $validator): void
     {
+        $errors = $validator->errors()->toArray();
+        if (isset($errors['data']) && in_array('The data must be a file of type: mp4, mpeg.', $errors['data'])) {
+            throw new HttpResponseException(response()->json([
+                'error' => [
+                    'message' => 'The data must be a file of type: mp4, mpeg.',
+                ],
+            ], Response::HTTP_UNSUPPORTED_MEDIA_TYPE));
+        }
+
         throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_BAD_REQUEST));
     }
 }

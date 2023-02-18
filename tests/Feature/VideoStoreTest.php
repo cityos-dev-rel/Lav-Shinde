@@ -22,16 +22,6 @@ class VideoStoreTest extends TestCase
         $response->assertBadRequest();
     }
 
-    public function testVideoStoreWithTextFile()
-    {
-        $file = UploadedFile::fake()->create('test.txt', 100);
-        $response = $this->postJson('/files', [
-            'data' => $file,
-        ]);
-
-        $response->assertBadRequest();
-    }
-
     public function testVideoStoreWithWrongContent()
     {
         $file = UploadedFile::fake()->create('test.txt', 100);
@@ -54,7 +44,7 @@ class VideoStoreTest extends TestCase
             'data' => $file,
         ]);
 
-        $response->assertStatus(409);
+        $response->assertConflict();
     }
 
     public function testVideoStoreWithValidFile()
@@ -66,7 +56,7 @@ class VideoStoreTest extends TestCase
             'data' => $file,
         ]);
 
-        $response->assertSuccessful();
+        $response->assertCreated();
         $this->assertDatabaseHas('videos', [
             'title' => $file->getClientOriginalName(),
         ]);
