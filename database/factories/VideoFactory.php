@@ -19,7 +19,6 @@ class VideoFactory extends Factory
         return [
             'name' => fake()->word(),
             'size' => rand(10, 10000),
-            'url' => fake()->url()
         ];
     }
 }

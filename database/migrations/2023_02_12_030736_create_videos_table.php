@@ -16,7 +16,6 @@ return new class () extends Migration {
             $table->ulid('fileid')->primary();
             $table->string('name')->unique();
             $table->integer('size')->description('in bytes');
-            $table->string('url');
             $table->timestamps();
         });
     }

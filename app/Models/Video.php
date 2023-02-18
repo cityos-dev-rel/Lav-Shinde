@@ -14,7 +14,6 @@ class Video extends Model
     public $fillable = [
         'name',
         'size',
-        'url'
     ];
 
     public function getKeyName()
