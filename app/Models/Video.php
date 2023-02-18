@@ -16,4 +16,9 @@ class Video extends Model
         'size',
         'url'
     ];
+
+    public function getKeyName()
+    {
+        return 'fileid';
+    }
 }

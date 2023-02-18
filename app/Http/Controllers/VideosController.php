@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VideoStoreRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class VideosController extends Controller
 {
@@ -30,15 +32,17 @@ class VideosController extends Controller
         $file = $request->file('data');
         $fileName = $file->getClientOriginalName();
 
-        if (Video::whereTitle($fileName)->first()) {
-            return response()->json(['message' => 'File exists'], 409);
+        if (Video::whereName($fileName)->first()) {
+            return response()->json(['error' => 'File exists'], Response::HTTP_CONFLICT);
         }
 
-        Storage::disk('s3')->put($fileName, file_get_contents($file));
-        $fileLocation = Storage::disk('s3')->url($fileName);
+        $randomName = $this->getRandomNameForFile();
+        Storage::disk('s3')->put($randomName, file_get_contents($file));
+        $fileLocation = Storage::disk('s3')->url($randomName);
 
-        Video::insert([
-            'title' => $fileName,
+        Video::create([
+            'name' => $fileName,
+            'size' => $file->getSize(),
             'url' => $fileLocation
         ]);
 
@@ -65,5 +69,14 @@ class VideosController extends Controller
     public function destroy(Video $file)
     {
         $file->delete();
+    }
+
+    private function getRandomNameForFile(): string
+    {
+        $name = Str::random(20);
+        while (Storage::disk('s3')->exists($name)) {
+            $name = Str::random(20);
+        }
+        return $name;
     }
 }
