@@ -16,7 +16,7 @@ class VideoGetTest extends TestCase
     {
         Video::factory()->count(4)->create();
 
-        $response = $this->get('/files');
+        $response = $this->getJson('/files');
 
         $response->assertOk();
         $response->assertJsonCount(4);
@@ -32,7 +32,7 @@ class VideoGetTest extends TestCase
 
     public function testGetSingleFileWhichDoesNotExist()
     {
-        $response = $this->get('/files/123');
+        $response = $this->getJson('/files/123');
 
         $response->assertNotFound();
     }
@@ -44,7 +44,7 @@ class VideoGetTest extends TestCase
         $file = UploadedFile::fake()->create('test.mp4', 100);
         Storage::disk('s3')->put($video->fileid, $file->getContent());
 
-        $response = $this->get("/files/$video->fileid");
+        $response = $this->getJson("/files/$video->fileid");
 
         $response->assertOk();
         $response->assertHeader('Content-Disposition');

@@ -54,6 +54,7 @@ class VideoStoreTest extends TestCase
         ]);
 
         $response->assertCreated();
+        $response->assertHeader('Location');
         $this->assertDatabaseHas('videos', [
             'name' => $file->getClientOriginalName(),
         ]);
