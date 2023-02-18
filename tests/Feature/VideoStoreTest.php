@@ -34,7 +34,7 @@ class VideoStoreTest extends TestCase
         Storage::fake('s3');
         $file = UploadedFile::fake()->create('test.mp4', 100);
         Video::factory()->create([
-            'title' => $file->getClientOriginalName(),
+            'name' => $file->getClientOriginalName(),
         ]);
 
         $response = $this->postJson('/files', [
@@ -55,7 +55,7 @@ class VideoStoreTest extends TestCase
 
         $response->assertCreated();
         $this->assertDatabaseHas('videos', [
-            'title' => $file->getClientOriginalName(),
+            'name' => $file->getClientOriginalName(),
         ]);
     }
 }
