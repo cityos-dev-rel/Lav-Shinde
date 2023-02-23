@@ -13,8 +13,6 @@ services:
       - "host.docker.internal:host-gateway"
     ports:
       - "${APP_PORT:-80}:80"
-    volumes:
-      - ".:/var/www/html"
     environment:
       WWWUSER: "${WWWUSER}"
       LARAVEL_SAIL: 1

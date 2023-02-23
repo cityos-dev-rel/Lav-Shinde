@@ -53,11 +53,19 @@ COPY ./docker/8.2/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/8.2/php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
-COPY . /var/www/html
-RUN composer install --no-dev --optimize-autoloader \
+
+COPY --chown=sail:sail . /var/www/html
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs \
   && chgrp -R $WWWGROUP /var/www/html \
   && chmod -R 775 /var/www/html/storage \
   && chmod -R 775 /var/www/html/bootstrap/cache
+USER sail
+RUN rm -f /var/www/html/database/database.sqlite \
+  && touch /var/www/html/database/database.sqlite \
+  && php artisan migrate:install \
+  && php artisan migrate:fresh
+
+USER root
 
 EXPOSE 8000
 
